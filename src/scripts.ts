@@ -784,4 +784,237 @@ console.log(objectFromString('a'));
 console.log(objectFromString('z'));
 console.log(objectFromString('b'));
 
+// Task 51
+// Write a function that takes two strings (a and b) as arguments
+// Create an object that has a property with key 'a' and a value of 'b'
+// Return the object
+type ObjectString = {
+    [key: string]: string;
+}
+const objectFromStringsKeyValue = (str1: string, str2: string):ObjectString => {
+    const finalObject:ObjectString = {[str1]: str2};
+    return finalObject;
+}
 
+console.log("Answers for task 51:");
+console.log(objectFromStringsKeyValue('a','b'));
+console.log(objectFromStringsKeyValue('z','x'));
+console.log(objectFromStringsKeyValue('b','w'));
+
+// Task 52
+// Write a function that takes two arrays (a and b) as arguments
+// Create an object that has properties with keys 'a' and corresponding values 'b'
+// Return the object
+
+type ObjectFromArray = {
+    [key: string | number]: any;
+}
+const objectFromArrays = (arr1: any[], arr2: any[]) => {
+    let finalObject:ObjectFromArray = {};
+    arr1.forEach((element, i) => {
+        finalObject[element] = arr2[i];
+    })
+    return finalObject;
+}
+
+console.log("Answers for task 52:");
+console.log(objectFromArrays(['a','b','c'],[1,2,3]));
+console.log(objectFromArrays(['w','x','y','z'],[10,9,5,2]));
+console.log(objectFromArrays([1,'b'],['a',2]));
+
+// Task 53
+// Write a function that takes an object (a) as argument
+// Return an array with all object keys
+
+const arrayWithObjectKeys = (obj: {[key: string]: number}) => Object.keys(obj);
+
+console.log("Answers for task 53:");
+console.log(arrayWithObjectKeys({a:1,b:2,c:3}));
+console.log(arrayWithObjectKeys({j:9,i:2,x:3,z:4}));
+console.log(arrayWithObjectKeys({w:15,x:22,y:13}));
+
+// Task 54
+// Write a function that takes an object (a) as argument
+// Return the sum of all object values
+
+const sumOfObjectValues = (obj: {[key: string]: number}) => {
+    let valuesArray = Object.values(obj);
+    return valuesArray.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+}
+
+console.log("Answers for task 54:");
+console.log(sumOfObjectValues({a:1,b:2,c:3}));
+console.log(sumOfObjectValues({j:9,i:2,x:3,z:4}));
+console.log(sumOfObjectValues({w:15,x:22,y:13}));
+
+// Task 55
+// Write a function that takes an object as argument
+// It should return an object with all original object properties
+// except for the property with key 'b'
+type Object55 = {
+    [key: string]: number;
+}
+const propertiesFromObject = (obj: {[key: string]: number}) => {
+   let finalObject:Object55 = {};
+   Object.keys(obj).forEach(key => {
+    if(key !== 'b'){
+        finalObject[key] = obj[key];
+    };
+   })
+   return finalObject;
+}
+
+console.log("Answers for task 55:");
+console.log(propertiesFromObject({ a: 1, b: 7, c: 3 }));
+console.log(propertiesFromObject({ b: 0, a: 7, d: 8 }));
+console.log(propertiesFromObject({ e: 6, f: 4, b: 5, a: 3 }));
+
+// Task 56
+// Write a function that takes two objects as arguments
+// Unfortunately, the property 'b' in the second object has the wrong key
+// should be named 'd' instead
+// Merge both objects and correct the wrong property name
+// Return the resulting object
+// It should have the properties 'a', 'b', 'c', 'd', and 'e'
+type Object56 = {
+    [key: string]: number;
+}
+const mergeObjects = (obj: {[key: string]: number}, obj2: {[key: string]: number}) => {
+    let finalObject:Object56 = {};
+   Object.keys(obj).forEach(key => {
+    finalObject[key] = obj[key];
+   })
+   Object.keys(obj2).forEach(key => {
+    if(key === 'b'){
+        // key = 'd';
+        finalObject['d'] = obj2[key];
+    }else{finalObject[key] = obj2[key];
+    }
+   })
+   return finalObject;
+}
+
+console.log("Answers for task 56:");
+console.log(mergeObjects({ a: 1, b: 2 }, { c: 3, b: 4, e: 5 }));
+console.log(mergeObjects({ a: 5, b: 4 }, { c: 3, b: 1, e: 2 }));
+
+// Task 57
+// Write a function that takes an object (a) and a number (b) as arguments
+// Multiply all values of 'a' by 'b'
+// Return the resulting object
+
+const objectMultiply = (obj: {[key: string]: number}, num: number) => {
+    Object.keys(obj).forEach(key => {
+        obj[key] = obj[key]*num;
+    })
+    return obj;
+}
+
+console.log("Answers for task 57:");
+console.log(objectMultiply({a:1,b:2,c:3},3));
+console.log(objectMultiply({j:9,i:2,x:3,z:4},10));
+console.log(objectMultiply({w:15,x:22,y:13},6));
+
+// Task 58
+// Write a function that takes an object as argument
+// Somehow, the properties and keys of the object got mixed up
+// Swap the Javascript object's key with its values and return the resulting object
+type Object58 = {
+    [key: string | number]: any;
+}
+const swapObject = (obj: {[key: string | number]: any}) => {
+    let finalObject: Object58 = {};
+    Object.keys(obj).forEach(key => {
+        let tempKey = key;
+        let tempValue = obj[key];
+        finalObject[tempValue] = tempKey;
+        //     const finalObject:ObjectString = {[str1]: str2};
+    })
+    return finalObject;
+}
+
+console.log("Answers for task 58:");
+console.log(swapObject({z:'a',y:'b',x:'c',w:'d'}));
+console.log(swapObject({2:'a',4:'b',6:'c',8:'d'}));
+console.log(swapObject({a:1,z:24}));
+
+// Task 59
+// Write a function that takes an object as argument
+// Some of the property values contain empty strings
+// Replace empty strings and strings that contain only whitespace with null values
+// Return the resulting object
+
+const replaceEmptySpacesObject = (obj: {[key: string | number]: any}) => {
+    Object.keys(obj).forEach(key => {
+        if(obj[key] === "" || obj[key] === " "){
+            obj[key] = null;
+        }
+    })
+    return obj;
+}
+
+console.log("Answers for task 59:");
+console.log(replaceEmptySpacesObject({ a: 'a', b: 'b', c: '' }));
+console.log(replaceEmptySpacesObject({ a: '', b: 'b', c: ' ', d: 'd' }));
+console.log(replaceEmptySpacesObject({ a: 'a', b: 'b ', c: ' ', d: '' }));
+
+// Task 60
+// Write a function that takes an object as argument containing properties with personal information
+// Extract firstName, lastName, size, and weight if available
+// If size or weight is given transform the value to a string
+// Attach the unit cm to the size
+// Attach the unit kg to the weight
+// Return a new object with all available properties that we are interested in
+type Object60 = {
+    [key: string | number]: any;
+}
+const personalObject = (obj: {[key: string | number]: any}) => {
+    let personalObj: Object60 = {};
+    if(obj.hasOwnProperty("fn")){
+        personalObj["fn"] = obj["fn"];
+    }
+    if(obj.hasOwnProperty("ln")){
+        personalObj["ln"] = obj["ln"];
+    }
+    if(obj.hasOwnProperty("size")){
+        personalObj["size"] = obj["size"];
+    }
+    if(obj.hasOwnProperty("weight")){
+        personalObj["weight"] = obj["weight"];
+    }
+    return personalObj;
+}
+
+console.log("Answers for task 60:");
+console.log(personalObject({fn: 'Lisa', ln: 'Müller', age: 17, size: 175, weight: 67}));
+console.log(personalObject({fn: 'Martin', ln: 'Harper', age: 26, email: 'martin.harper@test.de', weight: 102}));
+console.log(personalObject({fn: 'Andrew', ln: 'Harper', age: 81, size: 175, weight: 71}));
+console.log(personalObject({fn: 'Matthew', ln: 'Müller', age: 19, email: 'matthew@mueller.de'}));
+
+// Task 61
+// Write a function that takes an array of objects and a string as arguments
+// Add a property with key 'continent' and value equal to the string to each of the objects
+// Return the new array of objects
+// Tip: try not to mutate the original array
+type Object61 = {
+    [key: string | number]: any;
+}
+const objectArray = (objArray: {[key: string]: string}[], str: string) => {
+    let finalArray :{}[] = [];
+    let tempObj: Object61 = {};
+    objArray.forEach(object => {
+        Object.keys(object).forEach(key => {
+            tempObj[key] = object[key];
+        })
+        tempObj["continent"] = str;
+        console.log(tempObj);
+        // tempObj each iteration are different, but pushes into array with same values, 2nd iteration values
+        finalArray.push(tempObj);
+
+    })
+    return finalArray;
+}
+
+console.log("Answers for task 61:");
+console.log(objectArray([{ city: 'Tokyo', country: 'Japan' }, { city: 'Bangkok', country: 'Thailand' }], 'Asia'));
+console.log(objectArray([{ city: 'Stockholm', country: 'Sweden' }, { city: 'Paris', country: 'France' }], 'Europe'));
