@@ -669,13 +669,28 @@ console.log(rangedArray(2, 7));
 // The values should be arrays of strings containing only the corresponding strings
 // For example, the array ['Alf', 'Alice', 'Ben'] should be transformed to
 // { a: ['Alf', 'Alice'], b: ['Ben']}
+type Object43 = {
+    [key: string]: string[];
+}
 
 const transformArrays = (stringArray: string[]) => {
-    return;
+    let objectResult: Object43 = {};
+    stringArray.forEach(string => {
+        
+        const firstLetter = string[0];
+
+        if(objectResult[firstLetter]){
+            objectResult[firstLetter].push(string);
+        }else{
+            objectResult[firstLetter] = [string];
+        }
+    })
+    return objectResult;
 }
 
 console.log("Answers for task 43:");
-console.log(transformArrays(['Alf', 'Alice', 'Ben']));
+console.log(transformArrays(['Alf', 'Alice', 'Ben'])); 
+// { a: ['Alf', 'Alice'], b: ['Ben']}
 console.log(transformArrays(['Ant', 'Bear', 'Bird']));
 console.log(transformArrays(['Berlin', 'Paris', 'Prague']));
 
@@ -1000,17 +1015,9 @@ type Object61 = {
     [key: string | number]: any;
 }
 const objectArray = (objArray: {[key: string]: string}[], str: string) => {
-    let finalArray :{}[] = [];
-    let tempObj: Object61 = {};
-    objArray.forEach(object => {
-        Object.keys(object).forEach(key => {
-            tempObj[key] = object[key];
-        })
-        tempObj["continent"] = str;
-        console.log(tempObj);
-        // tempObj each iteration are different, but pushes into array with same values, 2nd iteration values
-        finalArray.push(tempObj);
-
+    const finalArray = objArray.map(object => {
+        object["continent"] = str;
+        return object;
     })
     return finalArray;
 }
@@ -1018,3 +1025,144 @@ const objectArray = (objArray: {[key: string]: string}[], str: string) => {
 console.log("Answers for task 61:");
 console.log(objectArray([{ city: 'Tokyo', country: 'Japan' }, { city: 'Bangkok', country: 'Thailand' }], 'Asia'));
 console.log(objectArray([{ city: 'Stockholm', country: 'Sweden' }, { city: 'Paris', country: 'France' }], 'Europe'));
+
+// Task 62
+// Write a function that takes an array of numbers as argument
+// Convert the array to an object
+// It should have a key for each unique value of the array
+// The corresponding object value should be the number of times the key occurs within the array
+
+type Object62 = {
+    [key: number]: number;
+}
+const arrayToObject = (arr: number[]): Object62 => {
+    let counter = 0;
+    let object: Object62 = {};
+    arr.forEach(value => {
+        if(object.hasOwnProperty(value) === false){
+            object[value] = 1;
+        }else{
+            object[value] += 1;
+        }
+    })
+    return object;
+}
+
+console.log("Answers for task 62:");
+console.log(arrayToObject([1,2,2,3]));
+console.log(arrayToObject([9,9,9,99]));
+console.log(arrayToObject([4,3,2,1]));
+
+// Task 63
+// Write a function that takes two date instances as arguments
+// It should return true if the dates are equal
+// It should return false otherwise
+
+const dateEquality = (date1: Date, date2: Date) => {
+    return date1.valueOf() == date2.valueOf();
+}
+
+console.log("Answers for task 63:");
+console.log(dateEquality(new Date('2000/01/01 08:00:00'), new Date('2000/01/01 08:45:00')));
+console.log(dateEquality(new Date('2000/01/01 08:00:00'), new Date('2000/01/01 08:00:00')));
+console.log(dateEquality(new Date('2001/01/01 08:00:00'), new Date('2000/01/01 08:00:00')));
+
+// Task 64
+// Write a function that takes two date instances as argument
+// It should return the number of days that lies between those dates
+
+const daysBetweenDates = (date1: Date, date2: Date) => {
+    let timeInMs = date1.getTime() - date2.getTime()
+    return Math.abs(timeInMs / 86400 / 1000);
+}
+
+console.log("Answers for task 64:");
+console.log(daysBetweenDates(new Date('2020-06-11'), new Date('2020-06-01')));
+console.log(daysBetweenDates(new Date('2000-01-01'), new Date('2020-06-01')));
+
+// Task 65
+// Write a function that takes two date instances as argument
+// It should return true if they fall on the exact same day
+// It should return false otherwise
+
+const isSameDay = (date1: Date, date2: Date) => date1.getDay() === date2.getDay();
+
+console.log("Answers for task 65:");
+console.log(isSameDay(new Date('2000/01/01'), new Date('2000/01/01')));
+console.log(isSameDay(new Date('2000/01/01'), new Date('2000/01/02')));
+console.log(isSameDay(new Date('2001/01/01'), new Date('2000/01/01')));
+console.log(isSameDay(new Date('2000/11/01'), new Date('2000/01/01')));
+
+// Task 66
+// Write a function that takes two number arrays as parameters 
+// and return an array which contains elements from both 
+// arrays
+
+const arraysFromBoth = (arr1: number[], arr2: number[]): number[] => [...arr1, ...arr2];
+
+console.log("Answers for task 66:");
+console.log(arraysFromBoth([1, 2], [3, 4]) );
+console.log(arraysFromBoth([1, 2], [3, 4, 5, 6]));
+
+// Task 67
+// Write a function that takes an array and a string as parameters 
+// and return an array which contains all elements from the given array
+// and the given string as the last element
+
+const stringAndArray = (arr: string[], str: string): string[] => [...arr, (str)];
+
+console.log("Answers for task 67:");
+console.log(stringAndArray(['Apple', 'Orange', 'Banana'], 'Kiwi'));
+
+// Task 68
+// Write a function that takes an array and a string as parameters 
+// and return an array which contains all elements from the given array
+// and the given string as the first element
+
+const stringFirstAndArray = (arr: string[], str: string): string[] => [(str), ...arr];
+
+console.log("Answers for task 68:");
+console.log(stringFirstAndArray(['Apple', 'Orange', 'Banana'], 'Kiwi'));
+
+// Task 69
+// Write a function that takes two objects as parameters 
+// and return an object which contains properties from both 
+// objects
+
+type Object69 = {
+    [key: string]: number;
+}
+const objectFromTwoObjects = (obj: {[key: string]: number}, obj2: {[key: string]: number}) => {
+    let object: Object69 = {};
+    Object.keys(obj).forEach(key => {
+      object[key] = obj[key];
+    })
+    Object.keys(obj2).forEach(key => {
+        object[key] = obj2[key];
+      })
+    return object;
+}
+
+console.log("Answers for task 69:");
+console.log(objectFromTwoObjects({ a:1, b:2 }, { c:3, d:4 }));
+console.log(objectFromTwoObjects({ a:1, b:2 }, { c:3, d:4, e:5, f:6 }));
+
+// Task 70
+// Write a function that takes an object and a string as parameters 
+// and return an object which contains properties from the given object
+// and a new property favoriteMovie with the value equal to the given string
+type Object70 = {
+    [key: string]: any;
+}
+const customObject = (obj: {[key: string]: number | string}, str: string) => {
+    let customObj: Object70 = {};
+    Object.keys(obj).forEach(key => {
+        customObj[key] = obj[key];
+    })
+    customObj["favoriteMovie"] = str;
+    return customObj;
+}
+
+console.log("Answers for task 70:");
+console.log(customObject({ eyeColor: 'green', age: 10 }, 'Garfield'));
+console.log(customObject({ eyeColor: 'blue', age: 15 }, 'Twilight'));
